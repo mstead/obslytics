@@ -41,6 +41,7 @@ func main() {
 
 	cmds := map[string]setupFunc{}
 	registerExport(cmds, app)
+	registerKafka(cmds, app)
 
 	cmd, err := app.Parse(os.Args[1:])
 	if err != nil {
