@@ -98,7 +98,8 @@ func registerKafka(m map[string]setupFunc, app *kingpin.Application) {
 				return errors.Wrapf(err, "send kafka messages")
 			}
 			fmt.Println("Sent", sent, " message(s)")
-			kafkaProducer.Close()
+			//kafkaProducer.Close()
+			//fmt.Println("After close!")
 			return nil
 		}, func(error) { cancel() })
 		return nil

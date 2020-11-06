@@ -7,7 +7,9 @@ require (
 	github.com/Azure/go-autorest/autorest/validation v0.3.0 // indirect
 	github.com/OneOfOne/xxhash v1.2.6 // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
+	github.com/aws/aws-sdk-go v1.34.9
 	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
+	github.com/confluentinc/confluent-kafka-go v1.4.2
 	github.com/containerd/containerd v1.3.6 // indirect
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/coreos/pkg v0.0.0-20180928190104-399ea9e2e55f // indirect

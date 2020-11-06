@@ -1,0 +1,4 @@
+**/*.conf
+.envrc
+**/.idea
+**/out

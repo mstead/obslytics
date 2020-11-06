@@ -47,8 +47,14 @@ func (p DataframeKafkaProducer) Close() {
 
 // TODO Break this out into some sort of Message generator so that it can be defined caller.
 func (p DataframeKafkaProducer) createMessageData(row dataframe.Row, schema dataframe.Schema)  ([]byte, error) {
-	// TODO Use the values from the actual dataframe.
-	data, err := json.Marshal(EventData{"TEST"})
+	messageData := make(map[string] interface{})
+	for i, val := range row {
+		messageData[schema[i].Name] = val
+	}
+	fmt.Println("DATA:", messageData)
+
+	//data, err := json.Marshal(EventData{"TEST"})
+	data, err := json.Marshal(messageData)
 	if err != nil {
 		return nil, err
 	}
@@ -116,59 +122,3 @@ func NewDataframeKafkaProducer(logger log.Logger, confYaml []byte) (*DataframeKa
 	}
 	return &DataframeKafkaProducer{logger: logger, producer: *producer, topic: cfg.Topic}, nil
 }
-
-//func main() {
-//	//topic := "go-test-topic"
-//	//producer, err := kafka.NewProducer(&kafka.ConfigMap{
-//	//	"bootstrap.servers": bootstrapServers,
-//	//})
-//
-//	//if err != nil {
-//	//	fmt.Println("Failed to create producer: %s", err)
-//	//}
-//
-//	//data, err := json.Marshal(EventData{"TEST"})
-//	//if err != nil {
-//	//	fmt.Println("Error: %s", err)
-//	//}
-//	//rawData := json.RawMessage(data)
-//	//m := EventMessage{"1234", "metric-read", rawData}
-//	//value, err := json.Marshal(m)
-//	//if err != nil {
-//	//	fmt.Println("Error2: %s", err)
-//	//}
-//	//
-//	//perr := producer.Produce(&kafka.Message{
-//	//	TopicPartition: kafka.TopicPartition{Topic: &topic,
-//	//		Partition: kafka.PartitionAny},
-//	//	Value: value}, nil)
-//	//
-//	//if perr != nil {
-//	//	fmt.Println("ERROR: %s", perr)
-//	//}
-//	//
-//	//e := <-producer.Events()
-//	//
-//	//switch e.(type) {
-//	//case *kafka.Message:
-//	//	message := e.(*kafka.Message)
-//	//	if message.TopicPartition.Error != nil {
-//	//		fmt.Printf("failed to deliver message: %v\n",
-//	//			message.TopicPartition)
-//	//	} else {
-//	//		fmt.Printf("delivered to topic %s [%d] at offset %v\n",
-//	//			*message.TopicPartition.Topic,
-//	//			message.TopicPartition.Partition,
-//	//			message.TopicPartition.Offset)
-//	//	}
-//	//
-//	//case kafka.Error:
-//	//	fmt.Printf("CAUGHT ERROR: %v",e)
-//	//}
-//
-//	//
-//	//
-//	//producer.Close()
-//
-//}
-
